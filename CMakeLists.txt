@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic")
+set(RUN_AUTOMATED_TESTS OFF CACHE PATH "Run the unit tests")
 
 
 include_directories(.)
@@ -14,13 +15,14 @@ function(create_test COM LINKLIST)
 	list(GET LINKLIST 0 MODULE_NAME)
 	add_executable(${MODULE_NAME} ${MODULE_NAME}.cpp)
 	target_link_libraries(${LINKLIST})
-#	add_custom_command(
-#	TARGET ${MODULE_NAME}
-#	COMMENT "${COM}"
-#	POST_BUILD
-#	COMMAND ${MODULE_NAME} -c
-#)
+	if(RUN_AUTOMATED_TESTS)
+		add_custom_command(
+			TARGET ${MODULE_NAME}
+			COMMENT "${COM}"
+			POST_BUILD
+			COMMAND ${MODULE_NAME} -c
+		)
+	endif()
 endfunction()
 add_subdirectory(HelloWorld)
 add_subdirectory(CppUTest)
-
