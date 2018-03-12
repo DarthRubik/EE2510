@@ -56,6 +56,39 @@ TEST_GROUP(Calculator)
 		my_average(array,sizeof...(values),&answer);
 		DOUBLES_EQUAL(expect,answer,.01);
 	}
+	template<typename... T>
+	void MinMaxOfSomethingIsNotError(T... values)
+	{
+		int array[] = { values... };
+		int value1;
+		int value2;
+		int result = my_find_large_small(array,sizeof...(values),&value1,&value2);
+		LONGS_EQUAL(0,result);
+	}
+	template<typename... T>
+	void MinMax(int max,int min,T... values)
+	{
+		int array[] = { values...};
+		int got_max;
+		int got_min;
+		my_find_large_small(array,sizeof...(values),&got_max,&got_min);
+		LONGS_EQUAL(max,got_max);
+		LONGS_EQUAL(min,got_min);
+	}
+	template<typename... T>
+	void Series(float expect,T... values)
+	{
+		int array[] = { values... };
+		my_series_parallel(array,sizeof...(values),1,&answer);
+		DOUBLES_EQUAL(expect,answer,.01);
+	}
+	template<typename... T>
+	void Parallel(float expect,T... values)
+	{
+		int array[] = { values... };
+		my_series_parallel(array,sizeof...(values),2,&answer);
+		DOUBLES_EQUAL(expect,answer,.01);
+	}
 };
 
 
@@ -67,6 +100,10 @@ TEST(Calculator,TestOutOfRange)
 	TestOutOfRange(6,123,123);
 	TestOutOfRange(43,123,123);
 
+}
+TEST(Calculator,TestNullAns)
+{
+	LONGS_EQUAL(3,my_basic_math(1,1,1,0));
 }
 TEST(Calculator,TestInRange)
 {
@@ -139,6 +176,11 @@ TEST(Calculator,AverageOfNullIsError)
 	int result = my_average(0,120,&answer);
 	LONGS_EQUAL(2,result);
 }
+TEST(Calculator,AverageNullAns)
+{
+	int array[] = {1,2};
+	LONGS_EQUAL(3,my_average(array,2,0));
+}
 TEST(Calculator, RealAvgProbIsNotError)
 {
 	RealAvgProbIsNotError(1,2,3,4,5);
@@ -153,8 +195,63 @@ TEST(Calculator, Average)
 	Average(4.5,4,5);
 	Average(2,1,2,3);
 }
-
-
+TEST(Calculator, MinMaxOfNothingIsError)
+{
+	int array[] = {1,2};
+	int answer[2];
+	LONGS_EQUAL(1,my_find_large_small(array,0,&answer[0],&answer[1]));
+}
+TEST(Calculator, MinMaxOfNullIsError)
+{
+	int answer[2];
+	LONGS_EQUAL(2,my_find_large_small(0,2,&answer[0],&answer[1]));
+}
+TEST(Calculator, MinMaxOfSomethingIsNotError)
+{
+	MinMaxOfSomethingIsNotError(1,2,3,4,5);
+	MinMaxOfSomethingIsNotError(1,2,34,5);
+	MinMaxOfSomethingIsNotError(13,4,5,2);
+	MinMaxOfSomethingIsNotError(1,23,4,5);
+	MinMaxOfSomethingIsNotError(1,2,3,45);
+}
+TEST(Calculator, MinMaxPointersRestrict)
+{
+	int array[2];
+	int answer;
+	LONGS_EQUAL(3,my_find_large_small(array,2,&answer,&answer));
+}
+TEST(Calculator, MinMaxPointersNonNull)
+{
+	int array[2];
+	int answer;
+	LONGS_EQUAL(4,my_find_large_small(array,2,0,&answer));
+	LONGS_EQUAL(5,my_find_large_small(array,2,&answer,0));
+}
+TEST(Calculator, MinMax)
+{
+	MinMax(5,1,1,2,3,4,5);
+	MinMax(34,1,1,2,34,5);
+	MinMax(213,4,213,4,52);
+	MinMax(45,23,23,45);
+	MinMax(45,45,45);
+}
+TEST(Calculator, SeriesOfNothing)
+{
+	int array[2];
+	LONGS_EQUAL(1,my_series_parallel(array,0,1,&answer));
+}
+TEST(Calculator, Series)
+{
+	Series(10,1,2,3,4);
+	Series(720,100,223,354,43);
+	Series(357,123,234);
+}
+TEST(Calculator, Parallel)
+{
+	Parallel(.48,1,2,3,4);
+	Parallel(24.65,100,223,354,43);
+	Parallel(80.62,123,234);
+}
 
 int main(int ac, char** av)
 {
