@@ -1,0 +1,4 @@
+
+add_library(BasicEmployee BasicEmployee.cpp)
+add_executable(BasicEmployeeMain BasicEmployeeMain.cpp)
+target_link_libraries(BasicEmployeeMain BasicEmployee)
