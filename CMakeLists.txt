@@ -9,6 +9,7 @@ set(RUN_AUTOMATED_TESTS OFF CACHE PATH "Run the unit tests")
 
 
 include_directories(.)
+include_directories(Utility)
 include_directories($ENV{CPPUTEST_INCLUDE}/include)
 
 function(create_test COM LINKLIST)
@@ -29,3 +30,4 @@ add_subdirectory(CppUTest)
 add_subdirectory(InClassDemo)
 add_subdirectory(Calculator)
 add_subdirectory(InClassBasicEmployee)
+add_subdirectory(Utility)
