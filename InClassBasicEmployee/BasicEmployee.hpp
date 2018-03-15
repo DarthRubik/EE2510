@@ -7,8 +7,14 @@ class BasicEmployee
 {
 	public:
 		BasicEmployee(std::string FirstName,std::string LastName);
-		std::string getFirstName();
-		std::string getLastName();
+		std::string getFirstName() const;
+		std::string getLastName() const;
+		std::string getFullName() const;
+
+		void workHours(int hours);
+		void setPay(int pay);
+		int getPaycheck();
+
 		virtual ~BasicEmployee();
 	private:
 		std::string FirstName;
