@@ -14,6 +14,7 @@ int Rectangle::getPerimeter()
 
 Rectangle::Rectangle(std::istream& stream)
 {
+	//Input from the stream the length and width
 	stream >> this->length;
 	stream >> this->width;
 }

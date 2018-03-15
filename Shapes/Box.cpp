@@ -4,6 +4,8 @@
 
 Box::Box(std::istream& stream)
 {
+	//Input from the stream
+	//the dimensions of the box
 	stream >> this->length;
 	stream >> this->width;
 	stream >> this->height;
