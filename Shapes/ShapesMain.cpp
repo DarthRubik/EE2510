@@ -4,11 +4,13 @@
 #include "Rectangle.hpp"
 
 
-int main()
+int main(int arc, char** arv)
 {
+
+	if (arc != 2) return -1;
 	//Open up our input file
 	std::ifstream file;
-	file.open("data.txt");
+	file.open(arv[1]);
 
 
 	if (file.is_open())
@@ -32,17 +34,16 @@ int main()
 			{
 				Rectangle rectangle(file);
 				std::cout << "Rectangle:\n"
-					  << "Area: " << rectangle.getArea() << '\n'
-					  << "Perimeter: " << rectangle.getPerimeter() 
+					  << "\tArea: " << rectangle.getArea() << '\n'
+					  << "\tPerimeter: " << rectangle.getPerimeter() 
 					  << std::endl << std::endl;
-
 			}
 			else
 			{
 				Box box(file);
 				std::cout << "Box:\n"
-					  << "Volume: " << box.getVolume() << '\n'
-					  << "Surface Area: " << box.getSurfaceArea() 
+					  << "\tVolume: " << box.getVolume() << '\n'
+					  << "\tSurface Area: " << box.getSurfaceArea() 
 					  << std::endl << std::endl;
 			}
 		}
