@@ -3,6 +3,25 @@
 #include "Box.hpp"
 #include "Rectangle.hpp"
 
+void PrintRectangle(Rectangle rectangle)
+{
+	std::cout << "Rectangle:\n"
+		<< "\tLength: " << rectangle.getLength() << '\n'
+		<< "\tWidth : " << rectangle.getWidth() << '\n'
+		<< "\tArea: " << rectangle.getArea() << '\n'
+		<< "\tPerimeter: " << rectangle.getPerimeter() 
+		<< std::endl << std::endl;
+}
+void PrintBox(Box box)
+{
+	std::cout << "Box:\n"
+		<< "\tLength: " << box.getLength() << '\n'
+		<< "\tWidth : " << box.getWidth() << '\n'
+		<< "\tHeight : " << box.getHeight() << '\n'
+		<< "\tVolume: " << box.getVolume() << '\n'
+		<< "\tSurface Area: " << box.getSurfaceArea() 
+		<< std::endl << std::endl;
+}
 
 int main(int arc, char** arv)
 {
@@ -33,18 +52,12 @@ int main(int arc, char** arv)
 			if (type == 'R')
 			{
 				Rectangle rectangle(file);
-				std::cout << "Rectangle:\n"
-					  << "\tArea: " << rectangle.getArea() << '\n'
-					  << "\tPerimeter: " << rectangle.getPerimeter() 
-					  << std::endl << std::endl;
+				PrintRectangle(rectangle);
 			}
 			else
 			{
 				Box box(file);
-				std::cout << "Box:\n"
-					  << "\tVolume: " << box.getVolume() << '\n'
-					  << "\tSurface Area: " << box.getSurfaceArea() 
-					  << std::endl << std::endl;
+				PrintBox(box);
 			}
 		}
 	}
